@@ -3,9 +3,9 @@ const db = require("../util/db.js");
 const fcm = require("../util/fcm.js");
 
 // REF
-const ref = db.refs.memeRef;
-const topic = "new-meme";
-const newMemeMsg = "A new meme has been added";
+const ref = db.refs.postRef;
+const topic = "new-post";
+const newPostMessage = "A new post has been added";
 
 // METHODS
 function getAll() {
@@ -18,14 +18,19 @@ function getById(id) {
 
 function createByAutoId(fieldToVal) {
   return db.createByAutoId(ref, {
-    imageUrl: fieldToVal.imageUrl,
+    date: fieldToVal.date,
+    description: fieldToVal.description,
+    latitude: fieldToVal.latitude,
+    longitude: fieldToVal.longitude,
+    pictureURL: fieldToVal.pictureURL,
+    postId: fieldToVal.postId,
     posterId: fieldToVal.posterId
   });
 }
 
-function notifyNewMeme() {
-  db.listenForChanges(ref, function(meme) {
-    fcm.sendNotification(topic, newMemeMsg);
+function notifyNewPost() {
+  db.listenForChanges(ref, function(post) {
+    fcm.sendNotification(topic, newPostMessage);
   });
 }
 
@@ -33,5 +38,5 @@ function notifyNewMeme() {
 module.exports.getAll = getAll;
 module.exports.getById = getById;
 module.exports.createByAutoId = createByAutoId;
-module.exports.notifyNewMeme = notifyNewMeme;
+module.exports.notifyNewPost = notifyNewPost;
 module.exports.ref = ref;

@@ -4,8 +4,8 @@ const ref = require("./firebase.js").database().ref();
 // CONSTANTS
 const errNoExist = "Object with id does not exist";
 const refs = {
-  userRef: ref.child("Users"),
-  memeRef: ref.child("Memes")
+  userRef: ref.child("User"),
+  postRef: ref.child("Posts")
 };
 
 // HELPERS
@@ -43,7 +43,12 @@ function getAll(ref) {
 
 function getById(ref, id) {
   return ref.child(id).once("value").then(function(snapshot) {
-    if (!snapshot.exists()) return Promise.reject(new Error(errNoExist));
+    if (!snapshot.exists()) {
+      return Promise.reject(new Error(errNoExist));
+    }
+    else{
+      return _singleCallback(snapshot);
+    }
   });
 }
 

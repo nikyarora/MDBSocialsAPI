@@ -1,6 +1,6 @@
 // HELPERS
-function _getParamsByField(req, field) {
-  var result = {};
+function _getParamsByField(req, result, field) {
+  //var result = {};
   for (var key in req[field]) {
     if (req[field][key] != null) {
       result[key] = req[field][key];
@@ -11,9 +11,9 @@ function _getParamsByField(req, field) {
 
 function _aggregateParams(req) {
   var result = {};
-  result = _getParamsByField(req, "query");
-  result = _getParamsByField(req, "body");
-  result = _getParamsByField(req, "params");
+  result = _getParamsByField(req, result, "query");
+  result = _getParamsByField(req, result, "body");
+  result = _getParamsByField(req, result, "params");
   return result;
 }
 

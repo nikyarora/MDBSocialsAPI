@@ -9,11 +9,13 @@ function getById(id) {
   return db.getById(ref, id);
 }
 
-function createByManualId(id, fieldToVal) {
-  return db.createByAutoId(ref, fieldToVal.fbId, {
-    fullname: fieldToVal.fullname,
+function createByAutoId(fieldToVal) {
+  return db.createByAutoId(ref, {
+    name: fieldToVal.name,
     email: fieldToVal.email,
-    profPicUrl: fieldToVal.profPicUrl
+    profilePictureURL: fieldToVal.profilePictureURL,
+    userID: fieldToVal.userID,
+    username: fieldToVal.username
   });
 }
 
@@ -25,18 +27,7 @@ function favorite(id, favId) {
   });
 }
 
-function unFavorite(id, favId) {
-  return db.transaction(ref, id, "favoriteIds", function(favoriteIds) {
-    favoriteIds = favoriteIds || [];
-    var index = favoriteIds.indexOf(favId);
-    favoriteIds.splice(index, 1);
-    return favoriteIds;
-  });
-}
-
 // EXPORTS
 module.exports.getById = getById;
-module.exports.createByManualId = createByManualId;
-module.exports.favorite = favorite;
-module.exports.unFavorite = unFavorite;
+module.exports.createByAutoId = createByAutoId;
 module.exports.ref = ref;
